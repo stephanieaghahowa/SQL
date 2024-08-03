@@ -83,6 +83,12 @@ SELECT company_name, MAX(employees)
 FROM fortune_companies;
 
 
+--query to generate the total number of companies in each kind of industry 
+SELECT DISTINCT industry, COUNT(industry)
+FROM fortune_companies
+GROUP BY industry;
+
+
 --query to identify all companies that are either in the finance or financials industry   
 SELECT company_name, industry  
 FROM fortune_companies
