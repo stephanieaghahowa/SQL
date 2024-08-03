@@ -82,12 +82,11 @@ ORDER BY title;
 
 
 --query to find out the director of the movie The Starling
-SELECT NP.director, NTI.title 
+SELECT director
 FROM "netflix_people" AS NP
 LEFT JOIN "netflix_titles_info" AS NTI
 ON NP.show_id=NTI.show_id
 WHERE NTI.title='The Starling';
-
 
 --query to find out what the oldest movie in the database is 
 SELECT title, release_year
