@@ -1,0 +1,62 @@
+#In this SQL, I'm querying a database with multiple tables in it to quantify statistics about customer and order data. 
+
+
+
+--query  to find out how many orders were placed in January 
+SELECT COUNT(orderid)
+FROM BIT_DB.JanSales
+WHERE length(orderid)=6
+AND orderid<>'Order ID';
+
+
+--query to find out how many January orders were for an iPhone
+SELECT COUNT(orderid)
+FROM BIT_DB.JanSales
+WHERE Product='iPhone'
+AND length(orderid)=6
+AND orderid<>'Order ID';
+
+
+--query to select customer account numbers for all orders placed in February 
+SELECT distinct acctnum
+FROM BIT_DB.customers AS cust
+INNER JOIN BIT_DB.FebSales AS Feb
+ON cust.order_id=Feb.orderID
+WHERE length(orderid)=6
+AND orderid<>'Order ID';
+
+
+--query to find out which product was the cheapest sold in January and at what price
+SELECT distinct product, price
+FROM BIT_DB.JanSales
+ORDER BY price 
+LIMIT 1;
+
+
+--query to find out what the total revenue was for each product sold in January 
+SELECT SUM(Quantity)*Price as revenue,Product
+FROM BIT_DB.JanSales
+WHERE length(orderid)=6
+AND orderid<>'Order ID'
+GROUP BY Product;
+
+--query to find out which products were sold at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what the total revenue was
+SELECT product,SUM (Quantity),sum(Quantity)*Price as revenue
+FROM BIT_DB.FebSales
+WHERE location='548 Lincoln St, Seattle, WA 98101'
+GROUP BY Product;
+
+
+--query to find out how many customers ordered more than 2 products at a time in February and what the average amount spent was for those customers
+SELECT COUNT(DISTINCT cust.acctnum),AVG(Quantity*Price)
+FROM BIT_DB.FebSales AS Feb
+LEFT JOIN BIT_DB.customers AS cust
+ON FEB.orderid=cust.order_id
+WHERE Feb.Quantity>2
+AND length(orderid) = 6;
+
+
+AND orderid <> 'Order ID';
+
+
+
